@@ -1,6 +1,6 @@
 #461. Hamming Distance
 
-##原题
+##Original Problem
 
 The Hamming distance between two integers is the number of positions at which the corresponding bits are different.
 
@@ -22,7 +22,7 @@ Explanation:
        ↑   ↑
 The above arrows point to positions where the corresponding bits are different.
 ```
-##解法
+##Solution
 
 “汉明距离”，一个较为著名的问题，给定两个整数，求出这两个数字的二进制中位数不同的个数。比如上面的1和4，在第0位和第2位数字不同，因此这个汉明距离就是2。
 
@@ -46,7 +46,7 @@ var hammingDistance = function(x, y) {
 ```
 #476. Number Complement
 
-##原题
+##Original Problem
 
 Given a positive integer, output its complement number. The complement strategy is to flip the bits of its binary representation.
 
@@ -70,7 +70,7 @@ Explanation: The binary representation of 1 is 1 (no leading zero bits), and its
 So you need to output 0.
 ```
 
-##解法
+##Solution
 
 **思路：** 
 如果我们能知道该数最高位的1所在的位置，就可以构造一个长度和该数据所占位置一样长的一个掩码mask，然后概述和mask进行异或即可。
@@ -91,7 +91,7 @@ var findComplement = function(num) {
 ```
 #557. Reverse Words in a String III
 
-##原题
+##Original Problem
 Given a string, you need to reverse the order of characters in each word within a sentence while still preserving whitespace and initial word order.
 
 Example 1:
@@ -102,7 +102,7 @@ Output: "s'teL ekat edoCteeL tsetnoc"
 ```
 Note: In the string, each word is separated by single space and there will not be any extra space in the string.
 
-##解法
+##Solution
 将字符串先打断为单词数组，再将单词打断为字母数组，然后将字母数组翻转，最后拼接成字符串。
 
 ```
@@ -121,5 +121,42 @@ var reverseWords = function(s) {
     return tempArr.join(' ');
 };
 ```
+#561. Array Partition I
 
+##Original Problem
 
+Given an array of 2n integers, your task is to group these integers into n pairs of integer, say (a1, b1), (a2, b2), ..., (an, bn) which makes sum of min(ai, bi) for all i from 1 to n as large as possible.
+
+Example 1:
+
+```
+Input: [1,4,3,2]
+
+Output: 4
+Explanation: n is 2, and the maximum sum of pairs is 4.
+```
+
+Note:
+
+n is a positive integer, which is in the range of [1, 10000].
+
+All the integers in the array will be in the range of [-10000, 10000].
+
+##Solution
+
+就是给2n个数分组，两两一组，使用所有组中小的那个数加起来和最小。 
+
+那么就是先将所有数排序，然后就是以排序后的值2个一组分组，然后取的就是两个中前一个的索引对应的值。
+
+```
+var arrayPairSum = function(nums) {
+    nums.sort(function (a, b) {
+        return a - b;
+    });
+    var result = 0;
+    for (var i = 0; i < nums.length; i+=2) {
+        result += nums[i];
+    }
+    return result;
+};
+```
