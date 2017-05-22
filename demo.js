@@ -20,4 +20,33 @@ var arrayPairSum = function(nums) {
     }
     return result;
 };
-console.log(arrayPairSum([11, 41, -9046, 2047, 1118, 8477, 8446, 279, 4925, 7380, -1719, 3855]));
+
+var matrixReshape = function(nums, r, c) {
+    var queue = [];
+    var i, j, result = [];
+
+    // create a queue from nums
+    for (i = 0; i < nums.length; i++) {
+        queue = queue.concat(nums[i]);
+    }
+
+    // The reshaped matrix need to be filled with ALL the elements
+    // so if r*c not equal to queue.length, it means new matrix cannot be formed, return original arr
+    if (queue.length !== r * c) {
+        return nums;
+    }
+
+    for (i = 0; i < r; i++) {
+        result[i] = [];
+        for (j = 0; j < c; j++) {
+            result[i].push(queue.shift());
+            // result[i][j] = queue.shift();   // no speed diff
+        }
+    }
+
+    return result;
+};
+var arr = [[1,2], [3,4]];
+var r = 1
+var c = 4
+console.log(matrixReshape(arr, r, c));
