@@ -343,3 +343,115 @@ var findWords = function(words) {
   return result;
 };
 ```
+
+#412. Fizz Buzz
+
+##Original Problem
+
+Write a program that outputs the string representation of numbers from 1 to n.
+
+But for multiples of three it should output “Fizz” instead of the number and for the multiples of five output “Buzz”. For numbers which are multiples of both three and five output “FizzBuzz”.
+
+Example:
+
+```
+n = 15,
+
+Return:
+[
+    "1",
+    "2",
+    "Fizz",
+    "4",
+    "Buzz",
+    "Fizz",
+    "7",
+    "8",
+    "Fizz",
+    "Buzz",
+    "11",
+    "Fizz",
+    "13",
+    "14",
+    "FizzBuzz"
+]
+```
+##Solution
+
+```
+var fizzBuzz = function(n) {
+  var arr = [];
+  for (var i = 1; i <= n; i++) {
+    if (i % 3 === 0 && i % 5 ===0) {
+      arr.push('FizzBuzz');
+    } else if (i % 3 === 0 && i % 5 !==0) {
+      arr.push('Fizz');
+    } else if (i % 3 !== 0 && i % 5 ===0) {
+      arr.push('Buzz');
+    } else {
+      arr.push('' + i);
+    }
+  }
+  return arr;  
+};
+```
+
+#496. Next Greater Element I
+
+##Original Problem
+
+You are given two arrays (without duplicates) nums1 and nums2 where nums1’s elements are subset of nums2. Find all the next greater numbers for nums1's elements in the corresponding places of nums2.
+
+The Next Greater Number of a number x in nums1 is the first greater number to its right in nums2. If it does not exist, output -1 for this number.
+
+Example 1:
+
+```
+Input: nums1 = [4,1,2], nums2 = [1,3,4,2].
+Output: [-1,3,-1]
+Explanation:
+    For number 4 in the first array, you cannot find the next greater number for it in the second array, so output -1.
+    For number 1 in the first array, the next greater number for it in the second array is 3.
+    For number 2 in the first array, there is no next greater number for it in the second array, so output -1.
+```
+Example 2:
+```
+Input: nums1 = [2,4], nums2 = [1,2,3,4].
+Output: [3,-1]
+Explanation:
+    For number 2 in the first array, the next greater number for it in the second array is 3.
+    For number 4 in the first array, there is no next greater number for it in the second array, so output -1.
+```
+Note:
+
+All elements in nums1 and nums2 are unique.
+
+The length of both nums1 and nums2 would not exceed 1000.
+
+##Solution
+
+找到nums1[i]在nums2中想等的元素nums2[j]，并判断nums2[j]之后的元素是否大于nums1[i],选出第一个大于nums1[i]的元素，若素有元素都不大于nums1[i]，则输出-1
+
+```
+var nextGreaterElement = function(findNums, nums) {
+  var result = [];
+  for (var i = 0; i < findNums.length; i++) {
+    var flag = false;
+    for (var j = 0; j < nums.length; j++) {
+      if (nums[j] === findNums[i]) {
+        for (var z = j+1; z < nums.length; z++) {
+          if (nums[z] && nums[z] > findNums[i]) {
+            result.push(nums[z]);
+            flag = true;
+            break;
+          }
+        }
+      }
+    }
+    if (!flag) {
+      result.push(-1)
+    }
+  }
+  return result;
+};
+```

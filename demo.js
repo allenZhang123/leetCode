@@ -89,4 +89,45 @@ var findWords = function(words) {
   }
   return result;
 };
-console.log(findWords(["Hello", "Alaska", "Dad", "Peace"]));
+
+/*But for multiples of three it should output “Fizz” instead of the number and for the multiples of five output “Buzz”.
+For numbers which are multiples of both three and five output “FizzBuzz”.*/
+var fizzBuzz = function(n) {
+  var arr = [];
+  for (var i = 1; i <= n; i++) {
+    if (i % 3 === 0 && i % 5 ===0) {
+      arr.push('FizzBuzz')
+    } else if (i % 3 === 0 && i % 5 !==0) {
+      arr.push('Buzz')
+    } else if (i % 3 !== 0 && i % 5 ===0) {
+      arr.push('“Fizz”')
+    } else {
+      arr.push(i)
+    }
+  }
+  return arr
+};
+
+var findNums = [2,4], nums = [1,2,3,4]
+var nextGreaterElement = function(findNums, nums) {
+  var result = [];
+  for (var i = 0; i < findNums.length; i++) {
+    var flag = false;
+    for (var j = 0; j < nums.length; j++) {
+      if (nums[j] === findNums[i]) {
+        for (var z = j+1; z < nums.length; z++) {
+          if (nums[z] && nums[z] > findNums[i]) {
+            result.push(nums[z]);
+            flag = true;
+            break;
+          }
+        }
+      }
+    }
+    if (!flag) {
+      result.push(-1)
+    }
+  }
+  return result;
+};
+console.log(nextGreaterElement(findNums, nums));
