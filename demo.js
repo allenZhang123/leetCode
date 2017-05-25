@@ -49,4 +49,44 @@ var matrixReshape = function(nums, r, c) {
 var arr = [[1,2], [3,4]];
 var r = 1
 var c = 4
-console.log(matrixReshape(arr, r, c));
+
+var distributeCandies = function(candies) {
+    // 首先找出一共有多少种类糖果
+    var kinds = 0;
+    var map = {};
+    for (var i = 0; i < candies.length; i ++) {
+        if(map[candies[i]] === undefined) {
+            kinds += 1;
+            map[candies[i]] = candies[i];
+        }
+    }
+    console.log(kinds);
+    console.log(candies.length);
+    if (kinds > candies.length / 2) {
+        return candies.length / 2;
+    } else {
+        return kinds;
+    }
+};
+
+var findWords = function(words) {
+  var keyArr = ["qwertyuiop", "asdfghjkl", "zxcvbnm"];
+  var result = [];
+  for (var i = 0; i < words.length; i++) {
+    for (var z = 0; z < keyArr.length; z++) {
+      console.log(keyArr[z]);
+      var flag = true;
+      for (var j = 0; j < words[i].length; j++) {
+        if (keyArr[z].search(words[i][j].toLowerCase()) === -1) {
+          flag = false;
+        }
+      }
+      if (flag) {
+        result.push(words[i]);
+        break;
+      }
+    }
+  }
+  return result;
+};
+console.log(findWords(["Hello", "Alaska", "Dad", "Peace"]));

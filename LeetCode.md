@@ -236,3 +236,110 @@ var matrixReshape = function(nums, r, c) {
     return result;
 };
 ```
+#575. Distribute Candies
+
+##Original Problem
+
+Given an integer array with even length, where different numbers in this array represent different kinds of candies. Each number means one candy of the corresponding kind. You need to distribute these candies equally in number to brother and sister. Return the maximum number of kinds of candies the sister could gain.
+
+Example 1:
+
+```
+Input: candies = [1,1,2,2,3,3]
+Output: 3
+Explanation:
+There are three different kinds of candies (1, 2 and 3), and two candies for each kind.
+Optimal distribution: The sister has candies [1,2,3] and the brother has candies [1,2,3], too. 
+The sister has three different kinds of candies. 
+```
+
+Example 2:
+
+```
+Input: candies = [1,1,2,3]
+Output: 2
+Explanation: For example, the sister has candies [2,3] and the brother has candies [1,1]. 
+The sister has two different kinds of candies, the brother has only one kind of candies. 
+```
+
+Note:
+
+The length of the given array is in range [2, 10,000], and will be even.
+The number in given array is in range [-100,000, 100,000].
+
+##Solution
+
+设糖果总数为N，种类为M
+ 
+妹妹分得的糖果数量为N/2 
+
+为了使妹妹得到的种类数最多，优先将每个种类的糖果分一个给妹妹。
+ 
+如果N/2 >= M , 妹妹每种糖果都可以拿到一个 
+
+如果N/2 < M，妹妹最多只能拿到N/2种糖果。
+
+```
+var distributeCandies = function(candies) {
+    // 首先找出一共有多少种类糖果
+    var kinds = 0;
+    var map = {};
+    for (var i = 0; i < candies.length; i ++) {
+        if(map[candies[i]] === undefined) {
+            kinds += 1;
+            map[candies[i]] = candies[i];
+        }
+    }
+    // 糖果种类大于糖果数量一半时，妹妹糖果最多一半种糖果
+    if (kinds > candies.length / 2) {
+        return candies.length / 2;
+    } else {
+    // 当糖果种类数量不足一半时，妹妹糖果最多kinds种
+        return kinds;
+    }
+};
+```
+#500. Keyboard Row
+
+##Original Problem
+
+Given a List of words, return the words that can be typed using letters of alphabet on only one row's of American keyboard like the image below.
+
+![](https://leetcode.com/static/images/problemset/keyboard.png)
+
+Example 1:
+
+```
+Input: ["Hello", "Alaska", "Dad", "Peace"]
+Output: ["Alaska", "Dad"]
+```
+Note:
+
+You may use one character in the keyboard more than once.
+You may assume the input string will only contain letters of alphabet.
+
+##Solution
+
+找出某字符串，此字符串的每一个字母都要在键盘的同一行
+
+```
+var findWords = function(words) {
+  var keyArr = ["qwertyuiop", "asdfghjkl", "zxcvbnm"];
+  var result = [];
+  for (var i = 0; i < words.length; i++) {
+    for (var z = 0; z < keyArr.length; z++) {
+      var flag = true;
+      for (var j = 0; j < words[i].length; j++) {
+        if (keyArr[z].search(words[i][j].toLowerCase()) === -1) {
+          flag = false;
+        }
+      }
+      if (flag) {
+        result.push(words[i]);
+        break;
+      }
+    }
+  }
+  return result;
+};
+```
