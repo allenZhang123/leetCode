@@ -130,4 +130,66 @@ var nextGreaterElement = function(findNums, nums) {
   }
   return result;
 };
-console.log(nextGreaterElement(findNums, nums));
+
+var grid = [[0,1,0,0],
+            [1,1,1,0],
+            [0,1,0,0],
+            [1,1,0,0]];
+var islandPerimeter = function(grid) {
+  var perimeter = 0;
+  for (var i = 0; i < grid.length; i++) {
+    for (var j = 0; j < grid[i].length; j++) {
+      if (grid[i][j] === 1) {
+        perimeter += 4;
+        if (i !== 0 && grid[i-1][j] === 1) perimeter -= 2;
+        if (j !== 0 && grid[i][j-1] === 1) perimeter -=2;
+      }
+    }
+  }
+  return perimeter;
+};
+
+var findMaxConsecutiveOnes = function(nums) {
+  var obj = {};
+  var count = 0;
+  var flag = 0;
+  for (var i = 0; i < nums.length; i++) {
+    if (nums[i] === 1) {
+      count += 1;
+      if (i === nums.length -1) {
+        obj[flag] = count;
+      }
+    } else {
+      obj[flag] = count;
+      count = 0;
+      flag += 1;
+    }
+  }
+  var max = 0;
+  for (var item in obj) {
+    if (obj[item] > max) {
+      max = obj[item];
+    }
+  }
+  return max;
+};
+var argu = [1,1,0,1,1,1];
+
+var arr = [1,3,4,6,1,3,4,6,0];
+var singleNumber = function(nums) {
+    var obj = {};
+    for (var i = 0; i < nums.length; i++) {
+      if (obj[nums[i]] === undefined) {
+        obj[nums[i]] = 1;
+      } else {
+        obj[nums[i]] = 2;
+      }
+    }
+    console.log(obj);
+    for (var item in obj) {
+      if (obj[item] === 1) {
+        return item
+      }
+    }
+};
+console.log(singleNumber(arr));

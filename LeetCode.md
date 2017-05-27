@@ -455,3 +455,180 @@ var nextGreaterElement = function(findNums, nums) {
   return result;
 };
 ```
+
+#463. Island Perimeter
+
+
+##Original Problem
+
+You are given a map in form of a two-dimensional integer grid where 1 represents land and 0 represents water. Grid cells are connected horizontally/vertically (not diagonally). The grid is completely surrounded by water, and there is exactly one island (i.e., one or more connected land cells). The island doesn't have "lakes" (water inside that isn't connected to the water around the island). One cell is a square with side length 1. The grid is rectangular, width and height don't exceed 100. Determine the perimeter of the island.
+
+Example:
+
+```
+[[0,1,0,0],
+ [1,1,1,0],
+ [0,1,0,0],
+ [1,1,0,0]]
+
+Answer: 16
+```
+
+Explanation: The perimeter is the 16 yellow stripes in the image below:
+
+
+![](https://leetcode.com/static/images/problemset/island.png)
+
+##Solution
+
+方法： 遍历1的个数乘以4是总边数，再减去相邻边条数乘以2，得到的便是周长
+
+```
+var islandPerimeter = function(grid) {
+  var perimeter = 0;
+  for (var i = 0; i < grid.length; i++) {
+    for (var j = 0; j < grid[i].length; j++) {
+      if (grid[i][j] === 1) {
+        perimeter += 4;
+        // 过滤掉相邻边
+        if (i !== 0 && grid[i-1][j] === 1) perimeter -= 2;
+        if (j !== 0 && grid[i][j-1] === 1) perimeter -=2;
+      }
+    }
+  }
+  return perimeter;
+};
+```
+
+#292. Nim Game
+
+##Original Problem
+
+You are playing the following Nim Game with your friend: There is a heap of stones on the table, each time one of you take turns to remove 1 to 3 stones. The one who removes the last stone will be the winner. You will take the first turn to remove the stones.
+
+Both of you are very clever and have optimal strategies for the game. **Write a function to determine whether you can win the game given the number of stones in the heap**.
+
+For example, if there are 4 stones in the heap, then you will never win the game: no matter 1, 2, or 3 stones you remove, the last stone will always be removed by your friend.
+
+##Solution
+
+这是博弈论中极为经典的尼姆游戏。有总数为n的石头，每个人可以拿1~m个石头，两个人交替拿，拿到最后一个的人获胜。究竟是先手有利，还是后手有利？
+
+```
+1个石子，先手全部拿走； 
+2个石子，先手全部拿走； 
+3个石子，先手全部拿走； 
+4个石子，后手面对的是先手的第1，2，3情况，后手必胜； 
+5个石子，先手拿走1个让后手面对第4种情况，后手必败； 
+6个石子，先手拿走2个让后手面对第4种情况，后手必败； 
+……
+```
+
+容易看出来，只有当出现了4的倍数，先手无可奈何，其余情况先手都可以获胜。 （石子数量为4的倍数）
+
+后手的获胜策略十分简单，每次取石子的数量，与上一次先手取石子的数量和为4即可； （石子数量不为4的倍数）先手的获胜策略也十分简单，每次都令取之后剩余的石子数量为4的倍数（4*0=0，直接拿光），他就处于后手的位置上，利用上一行的策略获胜。
+
+```
+var canWinNim = function(n) {
+    // 若n是4的倍数，则后手必可以胜，其他情况先手都可以必胜
+    if (n % 4 === 0) 
+        return false;
+    return true;
+};
+```
+#485. Max Consecutive Ones
+
+##Original Problem 
+
+Given a binary array, find the maximum number of consecutive 1s in this array.
+
+Example 1:
+
+```
+Input: [1,1,0,1,1,1]
+Output: 3
+Explanation: The first two digits or the last three digits are consecutive 1s.
+    The maximum number of consecutive 1s is 3.
+```
+
+Note:
+
+The input array will only contain 0 and 1.
+
+The length of input array is a positive integer and will not exceed 10,000
+
+##Solution
+
+```
+var findMaxConsecutiveOnes = function(nums) {
+  var obj = {}; // 存放每次1连续出现的次数
+  var count = 0; // 记录每次1连续出现的次数
+  var flag = 0; // 用于标志0出现次数
+  for (var i = 0; i < nums.length; i++) {
+    if (nums[i] === 1) {
+      count += 1;
+      if (i === nums.length -1) {
+        obj[flag] = count;
+      }
+    } else {
+      obj[flag] = count;
+      count = 0;
+      flag += 1;
+    }
+  }
+  var max = 0;
+  for (var item in obj) {
+    if (obj[item] > max) {
+      max = obj[item];
+    }
+  }
+  return max;
+};
+```
+#136. Single Number
+
+##Original Problem
+
+Given an array of integers, every element appears twice except for one. Find that single one.
+
+Note:
+
+Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
+
+##Solution
+
+###S1
+将数组的每个值与0取非，获得只有1个的数值
+
+```
+var singleNumber = function(nums) {
+    var result = 0;
+    // 将result与nums每个值取非，得到只出现一次的数
+    for (var i = 0; i < nums.length; i ++) {
+        result = result ^ nums[i];
+    }
+    return result;
+};
+```
+###S2
+
+用循环一次计算出每个数值出现的次数
+
+```
+var singleNumber = function(nums) {
+    var obj = {};
+    for (var i = 0; i < nums.length; i++) {
+      if (obj[nums[i]] === undefined) {
+        obj[nums[i]] = 1;
+      } else {
+        obj[nums[i]] = 2;
+      }
+    }
+    console.log(obj);
+    for (var item in obj) {
+      if (obj[item] === 1) {
+        return item
+      }
+    }
+};
+```
