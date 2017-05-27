@@ -632,3 +632,101 @@ var singleNumber = function(nums) {
     }
 };
 ```
+
+#521. Longest Uncommon Subsequence I
+
+##Original Problem
+
+Given a group of two strings, you need to find the longest uncommon subsequence of this group of two strings. The longest uncommon subsequence is defined as the longest subsequence of one of these strings and this subsequence should not be any subsequence of the other strings.
+
+A subsequence is a sequence that can be derived from one sequence by deleting some characters without changing the order of the remaining elements. Trivially, any string is a subsequence of itself and an empty string is a subsequence of any string.
+
+The input will be two strings, and the output needs to be the length of the longest uncommon subsequence. If the longest uncommon subsequence doesn't exist, return -1.
+
+Example 1:
+
+```
+Input: "aba", "cdc"
+Output: 3
+Explanation: The longest uncommon subsequence is "aba" (or "cdc"), 
+because "aba" is a subsequence of "aba", 
+but not a subsequence of any other strings in the group of two strings. 
+```
+
+Note:
+
+Both strings' lengths will not exceed 100.
+
+Only letters from a ~ z will appear in input strings.
+
+##Solution
+
+```
+var findLUSlength = function(a, b) {
+    // 相等返回-1， 不相等返回较长字符串
+    if (a === b) {
+        return -1;
+    } else if (a.length > b.length) {
+        return a.length;
+    } else {
+        return b.length;
+    }
+};
+```
+
+#520. Detect Capital
+
+##Original Problem
+
+Given a word, you need to judge whether the usage of capitals in it is right or not.
+
+We define the usage of capitals in a word to be right when one of the following cases holds:
+
+All letters in this word are capitals, like "USA".
+
+All letters in this word are not capitals, like "leetcode".
+
+Only the first letter in this word is capital if it has more than one letter, like "Google".
+
+Otherwise, we define that this word doesn't use capitals in a right way.
+
+Example 1:
+
+```
+Input: "USA"
+Output: True
+```
+Example 2:
+
+```
+Input: "FlaG"
+Output: False
+```
+Note: The input will be a non-empty word consisting of uppercase and lowercase latin letters.
+
+##Solution
+
+若全是大写 true； 若不全是大写，只要中间出现大写就是false.
+
+```
+var detectCapitalUse = function(word) {
+  var allUp = true;
+  var centerUp = false;
+  // 首先判断第一个字母是否是大写
+  if (word[0].toLowerCase() === word[0])
+    allUp = false;
+  // 在判断其他
+  if (word.length > 1) {
+    for (var i = 1; i < word.length; i ++) {
+      if (word[i].toLowerCase() === word[i])
+        allUp = false;
+      else
+        centerUp = true;
+    }
+  }
+  if (allUp || (!allUp && !centerUp))
+    return true;
+  else
+    return false;
+};
+```

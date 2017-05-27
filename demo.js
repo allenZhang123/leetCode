@@ -192,4 +192,52 @@ var singleNumber = function(nums) {
       }
     }
 };
-console.log(singleNumber(arr));
+
+var detectCapitalUse = function(word) {
+  var allUp = true;
+  var centerUp = false;
+  if (word[0].toLowerCase() === word[0])
+    allUp = false
+  if (word.length > 1) {
+    for (var i = 1; i < word.length; i ++) {
+      if (word[i].toLowerCase() === word[i])
+        allUp = false;
+      else
+        centerUp = true;
+    }
+  }
+  if (allUp)
+    return true;
+  else if (!allUp && !centerUp)
+    return true
+  else if (!allUp && centerUp)
+    return false
+};
+
+var detectCapitalUse = function(word) {
+  var allUp = true;
+  var centerUp = false;
+  if (word[0].toLowerCase() === word[0])
+    allUp = false;
+  if (word.length > 1) {
+    for (var i = 1; i < word.length; i ++) {
+      if (word[i].toLowerCase() === word[i])
+        allUp = false;
+      else
+        centerUp = true;
+    }
+  }
+  if (allUp || (!allUp && !centerUp))
+    return true;
+  else
+    return false;
+};
+
+var arr = [4,3,2,7,8,2,3,1];
+var findDisappearedNumbers = function(nums) {
+  var obj = {};
+  for (var i = 0; i < nums.length; i++) {
+    
+  }
+};
+console.log(findDisappearedNumbers(arr));
