@@ -323,13 +323,11 @@ var findTheDifference = function(s, t) {
   }
 };
 var s = 'a';
-var t = 'aa'
+var t = 'aa';
 var findTheDifference = function(s, t) {
   var tmp = 0;
   for(var i=0;i<s.length;i++) {
     tmp = tmp ^ s.charAt(i);
-    console.log(s.charAt(i));
-    console.log(tmp);
   }
   for(var i=0;i<t.length;i++) {
     tmp = tmp ^ t.charAt(i);
@@ -337,4 +335,58 @@ var findTheDifference = function(s, t) {
   }
   return tmp;
 };
-console.log(findTheDifference(s, t));
+// console.log(findTheDifference(s, t));
+var num1 = 0;
+var num2 = 'a';
+
+// 双层循环，时间超限制
+var constructRectangle = function(area) {
+  var arr = [];
+  var min = 10000000
+  for (var i = 0; i < area; i++) {
+    for (var j = 0; j < area; j++) {
+      if (i * j === area && i >= j) {
+        if (min > (i - j)) {
+          min = i  - j;
+          arr.push(i);
+          arr.push(j);
+        }
+      }
+    }
+  }
+  return arr;
+};
+// 方法二
+var constructRectangle = function(area) {
+  // 开平方根
+  var sqrtNum = parseInt(Math.sqrt(area));
+  while (area % sqrtNum !== 0) {
+    sqrtNum --;
+  }
+  var arr = [];
+  arr.push(sqrtNum);
+  arr.push(area/sqrtNum);
+  return arr;
+};
+
+var canConstruct = function(ransomNote, magazine) {
+  var magazineNum = {};
+  // 统计magazine中字符的个数
+  for (var i = 0; i < magazine.length; i++) {
+    if (magazineNum[magazine[i]] !== undefined) {
+      magazineNum[magazine[i]] += 1;
+    } else {
+      magazineNum[magazine[i]] = 1;
+    }
+  }
+  // 将ransom中字符与magazine中字符对应
+  for (var j = 0; j < ransomNote.length; j++) {
+    if (magazineNum[ransomNote[j]] === undefined || magazineNum[ransomNote[j]] <= 0) {
+      return false;
+    } else {
+      magazineNum[ransomNote[j]] = magazineNum[ransomNote[j]] - 1;
+    }
+  }
+  return true;
+};
+console.log(canConstruct('aac', 'aab'));
