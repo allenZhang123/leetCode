@@ -730,3 +730,154 @@ var detectCapitalUse = function(word) {
     return false;
 };
 ```
+
+#448. Find All Numbers Disappeared in an Array
+
+##Original Problem
+
+Given an array of integers where 1 ≤ a[i] ≤ n (n = size of array), some elements appear twice and others appear once.
+
+Find all the elements of [1, n] inclusive that do not appear in this array.
+
+Could you do it without extra space and in O(n) runtime? You may assume the returned list does not count as extra space.
+
+Example:
+
+```
+Input:
+[4,3,2,7,8,2,3,1]
+
+Output:
+[5,6]
+```
+
+#Solution
+
+将数组放进map中，然后将每个值一一对应
+
+```
+var findDisappearedNumbers = function(nums) {
+  var obj = {};
+  var result = [];
+  for (var i = 0; i < nums.length; i++) {
+    obj[nums[i]] = nums[i];
+  }
+  for (var j = 1; j <= nums.length; j++) {
+    if (obj[j] === undefined) {
+      result.push(j);
+    }
+  }
+  return result;
+};
+```
+
+#599. Minimum Index Sum of Two Lists
+
+##Original Problem
+
+Suppose Andy and Doris want to choose a restaurant for dinner, and they both have a list of favorite restaurants represented by strings.
+
+You need to help them find out their common interest with the least list index sum. If there is a choice tie between answers, output all of them with no order requirement. You could assume there always exists an answer.
+
+Example 1:
+
+```
+Input:
+["Shogun", "Tapioca Express", "Burger King", "KFC"]
+["Piatti", "The Grill at Torrey Pines", "Hungry Hunter Steakhouse", "Shogun"]
+Output: ["Shogun"]
+Explanation: The only restaurant they both like is "Shogun".
+```
+
+Example 2:
+
+```
+Input:
+["Shogun", "Tapioca Express", "Burger King", "KFC"]
+["KFC", "Shogun", "Burger King"]
+Output: ["Shogun"]
+Explanation: The restaurant they both like and have the least index sum is "Shogun" with index sum 1 (0+1).
+```
+Note:
+
+The length of both lists will be in the range of [1, 1000].
+
+The length of strings in both lists will be in the range of [1, 30].
+
+The index is starting from 0 to the list length minus 1.
+
+No duplicates in both lists.
+
+##Solution
+
+找出两个数组中相等的字符串，并计算相等字符串的索引值，输出最小所引值得字符串。
+
+```
+var findRestaurant = function(list1, list2) {
+  var length1 = list1.length;
+  var length2 = list2.length;
+  var obj = {};
+  var minLength = length1 < length2 ? length1 : length2;
+  var maxLength = length1 > length2 ? length1 : length2;
+  var minArr = [];
+  var maxArr = [];
+  var result = {};
+  var temp = [];
+  // 标记较长数组和较短数组
+  if (minLength === length1) {
+      minArr = list1;
+      maxArr = list2;
+  } else {
+    minArr = list2;
+    maxArr = list1;
+  }
+  // 将较短数组放进map中
+  for (var i = 0; i < minLength; i++)
+    obj[minArr[i]] = i;
+  // 循环较长数组，并与map中的值比较是否相等
+  for (var j = 0; j < maxLength; j++) {
+    if (obj[maxArr[j]] !== undefined) {
+      // 计算相等选项的索引和
+      var num = obj[maxArr[j]] + j;
+      // 如果map中已经存在此值，则将索引相等的值合并成数组
+      if (result[num] !== undefined) {
+        temp.concat(result[num]);
+        temp.push(maxArr[j]);
+      } else {
+        temp = [maxArr[j]];
+      }
+      result[num] = temp;
+    }
+  }
+  var minIndex = 9999;
+  for (var item in result) {
+    // 选出最小值
+    if (minIndex > Number(item)) {
+      minIndex = Number(item);
+    }
+  }
+  return result[minIndex];
+};
+```
+#Maximum Depth of Binary Tree
+
+##Original Problem 
+
+Given a binary tree, find its maximum depth.
+
+The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
+
+##Solution
+
+找出二叉树中最长的分支
+
+```
+// 递归
+var maxDepth = function(root) {
+    if (root === null) 
+        return 0;
+    var branchLeft = maxDepth(root.left);
+    var branchRigth = maxDepth(root.right);
+    return branchLeft > branchRigth ? branchLeft + 1 : branchRigth + 1;
+};
+```

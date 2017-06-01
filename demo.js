@@ -236,8 +236,105 @@ var detectCapitalUse = function(word) {
 var arr = [4,3,2,7,8,2,3,1];
 var findDisappearedNumbers = function(nums) {
   var obj = {};
+  var result = [];
   for (var i = 0; i < nums.length; i++) {
-    
+    obj[nums[i]] = nums[i];
+  }
+  for (var i = 1; i <= nums.length; i++) {
+    if (obj[i] === undefined) {
+      result.push(i)
+    }
+  }
+  return result;
+};
+
+var findRestaurant = function(list1, list2) {
+  var length1 = list1.length;
+  var length2 = list2.length;
+  var obj = {};
+  var minLength = length1 < length2 ? length1 : length2;
+  var maxLength = length1 > length2 ? length1 : length2;
+  var minArr = [];
+  var maxArr = [];
+  var result = {};
+  var temp = [];
+  if (minLength === length1) {
+      minArr = list1;
+      maxArr = list2;
+  } else {
+    minArr = list2
+    maxArr = list1
+  }
+  for (var i = 0; i < minLength; i++)
+    obj[minArr[i]] = i;
+  for (var j = 0; j < maxLength; j++) {
+    if (obj[maxArr[j]] !== undefined) {
+      var num = obj[maxArr[j]] + j
+      // 相等索引情况是否存在
+      if (result[num] !== undefined) {
+        temp.concat(result[num]);
+        temp.push(maxArr[j]);
+      } else {
+        temp = [maxArr[j]];
+      }
+      result[num] = temp;
+    }
+  }
+  var minIndex = 9999;
+  for (var item in result) {
+    // 选出最小值
+    if (minIndex > Number(item)) {
+      minIndex = Number(item);
+    }
+  }
+  return result[minIndex];
+};
+var list1 = ["Shogun","Tapioca Express","Burger King","KFC"]
+var list2 = ["KFC","Shogun","Burger King"]
+
+var s = "ymbgaraibkfmvocpizdydugvalagaivdbfsfbepeyccqfepzvtpyxtbadkhmwmoswrcxnargtlswqemafandgkmydtimuzvjwxvlfwlhvkrgcsithaqlcvrihrwqkpjdhgfgreqoxzfvhjzojhghfwbvpfzectwwhexthbsndovxejsntmjihchaotbgcysfdaojkjldprwyrnischrgmtvjcorypvopfmegizfkvudubnejzfqffvgdoxohuinkyygbdzmshvyqyhsozwvlhevfepdvafgkqpkmcsikfyxczcovrmwqxxbnhfzcjjcpgzjjfateajnnvlbwhyppdleahgaypxidkpwmfqwqyofwdqgxhjaxvyrzupfwesmxbjszolgwqvfiozofncbohduqgiswuiyddmwlwubetyaummenkdfptjczxemryuotrrymrfdxtrebpbjtpnuhsbnovhectpjhfhahbqrfbyxggobsweefcwxpqsspyssrmdhuelkkvyjxswjwofngpwfxvknkjviiavorwyfzlnktmfwxkvwkrwdcxjfzikdyswsuxegmhtnxjraqrdchaauazfhtklxsksbhwgjphgbasfnlwqwukprgvihntsyymdrfovaszjywuqygpvjtvlsvvqbvzsmgweiayhlubnbsitvfxawhfmfiatxvqrcwjshvovxknnxnyyfexqycrlyksderlqarqhkxyaqwlwoqcribumrqjtelhwdvaiysgjlvksrfvjlcaiwrirtkkxbwgicyhvakxgdjwnwmubkiazdjkfmotglclqndqjxethoutvjchjbkoasnnfbgrnycucfpeovruguzumgmgddqwjgdvaujhyqsqtoexmnfuluaqbxoofvotvfoiexbnprrxptchmlctzgqtkivsilwgwgvpidpvasurraqfkcmxhdapjrlrnkbklwkrvoaziznlpor"
+var t = "qhxepbshlrhoecdaodgpousbzfcqjxulatciapuftffahhlmxbufgjuxstfjvljybfxnenlacmjqoymvamphpxnolwijwcecgwbcjhgdybfffwoygikvoecdggplfohemfypxfsvdrseyhmvkoovxhdvoavsqqbrsqrkqhbtmgwaurgisloqjixfwfvwtszcxwktkwesaxsmhsvlitegrlzkvfqoiiwxbzskzoewbkxtphapavbyvhzvgrrfriddnsrftfowhdanvhjvurhljmpxvpddxmzfgwwpkjrfgqptrmumoemhfpojnxzwlrxkcafvbhlwrapubhveattfifsmiounhqusvhywnxhwrgamgnesxmzliyzisqrwvkiyderyotxhwspqrrkeczjysfujvovsfcfouykcqyjoobfdgnlswfzjmyucaxuaslzwfnetekymrwbvponiaojdqnbmboldvvitamntwnyaeppjaohwkrisrlrgwcjqqgxeqerjrbapfzurcwxhcwzugcgnirkkrxdthtbmdqgvqxilllrsbwjhwqszrjtzyetwubdrlyakzxcveufvhqugyawvkivwonvmrgnchkzdysngqdibhkyboyftxcvvjoggecjsajbuqkjjxfvynrjsnvtfvgpgveycxidhhfauvjovmnbqgoxsafknluyimkczykwdgvqwlvvgdmufxdypwnajkncoynqticfetcdafvtqszuwfmrdggifokwmkgzuxnhncmnsstffqpqbplypapctctfhqpihavligbrutxmmygiyaklqtakdidvnvrjfteazeqmbgklrgrorudayokxptswwkcircwuhcavhdparjfkjypkyxhbgwxbkvpvrtzjaetahmxevmkhdfyidhrdeejapfbafwmdqjqszwnwzgclitdhlnkaiyldwkwwzvhyorgbysyjbxsspnjdewjxbhpsvj"
+var findTheDifference = function(s, t) {
+  var sArr = s.split('');
+  var tArr = t.split('');
+  var mapS = {};
+  var mapT = {};
+  var length = tArr.length > sArr.length ? tArr.length : sArr.length;
+  for (var i = 0; i < length; i++) {
+    if (i < sArr.length) {
+      if (mapS[sArr[i]] !== undefined) {
+        mapS[sArr[i]] = mapS[sArr[i]] + 1;
+      } else {
+        mapS[sArr[i]] = 1;
+      }
+    }
+    if (i < tArr.length) {
+      if (mapT[tArr[i]] !== undefined) {
+        mapT[tArr[i]] = mapT[tArr[i]] + 1;
+      } else {
+        mapT[tArr[i]] = 1;
+      }
+    }
+  }
+  for (var item in mapT) {
+    if (mapS[item] === undefined || (mapS[item] !== undefined && mapS[item] < mapT[item])) {
+      return item;
+    }
   }
 };
-console.log(findDisappearedNumbers(arr));
+var s = 'a';
+var t = 'aa'
+var findTheDifference = function(s, t) {
+  var tmp = 0;
+  for(var i=0;i<s.length;i++) {
+    tmp = tmp ^ s.charAt(i);
+    console.log(s.charAt(i));
+    console.log(tmp);
+  }
+  for(var i=0;i<t.length;i++) {
+    tmp = tmp ^ t.charAt(i);
+    // console.log(tmp);
+  }
+  return tmp;
+};
+console.log(findTheDifference(s, t));
